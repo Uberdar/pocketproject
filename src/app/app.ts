@@ -7,8 +7,8 @@ import { NavigationComponent } from './shared/navigation/navigation';
   selector: 'app-root',
   imports: [
     RouterOutlet,
-    NavigationComponent  // Add the navigation component to imports
-  ],
+    NavigationComponent // Add the navigation component to imports
+],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })

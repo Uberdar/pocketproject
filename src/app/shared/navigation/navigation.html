@@ -13,7 +13,6 @@
     <!-- Center: Navigation Links (we'll add these later) -->
     <div class="nav-center">
       <!-- Future navigation menu items will go here -->
-      <!-- Example: Home, Browse, Categories, etc. -->
     </div>
     
     <!-- Right Side: Login Button -->
@@ -30,35 +29,27 @@
   </div>
 </nav>
 
+<!-- Login Modal (conditionally displayed) -->
+@if (isLoginModalOpen) {
+  <app-login-modal (closeModal)="onCloseModal()"></app-login-modal>
+}
+
 <!-- 
-EXPLANATION OF THE HTML STRUCTURE:
+EXPLANATION OF CHANGES:
 
-1. <nav> element:
-   - Semantic HTML5 element for navigation
-   - role="navigation" for accessibility
-   - aria-label provides context for screen readers
+1. Added LoginModal import in TypeScript file
+2. Added isLoginModalOpen boolean property to track modal state
+3. Updated onLoginClick() to set isLoginModalOpen = true
+4. Added onCloseModal() method to handle modal closing
+5. Used Angular v20 @if syntax to conditionally show modal
+6. Added (closeModal) event binding to handle modal close events
 
-2. .nav-container:
-   - Wrapper div for layout control
-   - Will use CSS flexbox for positioning
+The modal will appear when:
+- User clicks the "Log In" button
 
-3. .nav-left:
-   - Contains logo/title
-   - <h1> for SEO and semantic importance
-   - {{ appTitle }} uses Angular interpolation to display the title
-
-4. .nav-center:
-   - Reserved for future navigation links
-   - Empty for now but structured for easy expansion
-
-5. .nav-right:
-   - Contains the login button
-   - (click)="onLoginClick()" uses Angular event binding
-   - aria-label for accessibility
-
-6. Why this structure?
-   - Flexible: Easy to add more elements
-   - Responsive: Can adapt to different screen sizes
-   - Accessible: Proper ARIA labels and semantic HTML
-   - Maintainable: Clear sections for different purposes
+The modal will close when:
+- User clicks the X button in top-right corner
+- User clicks outside the modal (on backdrop)
+- User presses Escape key
+- Any of these actions trigger the closeModal event
 -->

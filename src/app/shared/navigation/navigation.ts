@@ -1,20 +1,28 @@
 import { Component } from '@angular/core';
+import { LoginModal } from '../login-modal/login-modal';
 
 @Component({
-  selector: 'app-navigation', // This is how we'll use the component in HTML: <app-navigation></app-navigation>
-  imports: [], // For standalone components, we import what we need here (empty for now)
-  templateUrl: './navigation.html', // Points to our HTML template file
-  styleUrl: './navigation.scss' // Points to our SCSS styles file
+  selector: 'app-navigation',
+  imports: [LoginModal], // Import the LoginModal component
+  templateUrl: './navigation.html',
+  styleUrl: './navigation.scss'
 })
 export class NavigationComponent {
-  // Component properties and methods go here
+  // Component properties
+  appTitle = 'DNDDB';
   
-  // For now, we'll keep it simple with just a title property
-  appTitle = 'DNDDB'; // Your D&D database app title
+  // Modal visibility state
+  isLoginModalOpen = false;
   
-  // Method to handle login button click (we'll add functionality later)
+  // Method to handle login button click
   onLoginClick(): void {
-    console.log('Login button clicked!'); // For now, just log to console
-    // Later we'll add actual login functionality here
+    console.log('Login button clicked!');
+    this.isLoginModalOpen = true; // Show the modal
+  }
+  
+  // Method to handle modal close
+  onCloseModal(): void {
+    console.log('Modal closed');
+    this.isLoginModalOpen = false; // Hide the modal
   }
 }

@@ -1,0 +1,278 @@
+// ===== SCSS VARIABLES =====
+$backdrop-color: rgba(0, 0, 0, 0.5);     // Semi-transparent black backdrop
+$modal-bg: #ffffff;                       // White modal background
+$modal-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+$border-radius: 12px;                     // Rounded corners
+$text-primary: #1f2937;                   // Dark gray text
+$text-secondary: #6b7280;                 // Light gray text
+$google-hover: #f3f4f6;                   // Light gray for hover
+$google-border: #d1d5db;                  // Gray border for Google button
+$close-hover: #f9fafb;                    // Light gray for close button hover
+
+// ===== MODAL BACKDROP =====
+.modal-backdrop {
+  // Full screen overlay
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;                          // Very high z-index to appear above everything
+  
+  // Visual styling
+  background-color: $backdrop-color;
+  backdrop-filter: blur(4px);             // Modern blur effect behind modal
+  
+  // Flexbox to center the modal
+  display: flex;
+  align-items: center;                    // Vertical centering
+  justify-content: center;                // Horizontal centering
+  padding: 1rem;                          // Padding around modal for mobile
+  
+  // Smooth appearance animation
+  animation: backdropFadeIn 0.2s ease-out;
+  
+  // Why these styles:
+  // - Fixed position covers entire viewport
+  // - High z-index ensures it appears above other content
+  // - Flexbox provides easy centering
+  // - Blur effect adds modern touch
+  // - Animation makes appearance smooth
+}
+
+// ===== MODAL CONTENT CONTAINER =====
+.modal-content {
+  // Layout and sizing
+  background-color: $modal-bg;
+  border-radius: $border-radius;
+  box-shadow: $modal-shadow;
+  width: 100%;
+  max-width: 400px;                       // Optimal width for login modal
+  max-height: 90vh;                       // Prevent modal from being too tall
+  overflow-y: auto;                       // Scroll if content is too long
+  
+  // Positioning
+  position: relative;                     // For absolute positioning of close button
+  
+  // Animation
+  animation: modalSlideIn 0.3s ease-out;  // Smooth slide-in effect
+  
+  // Why these styles:
+  // - max-width prevents modal from being too wide
+  // - max-height prevents modal from exceeding viewport
+  // - Border radius and shadow create modern appearance
+  // - Animation makes interaction feel smooth
+}
+
+// ===== MODAL HEADER =====
+.modal-header {
+  // Layout
+  display: flex;
+  align-items: center;
+  justify-content: space-between;         // Title on left, close button on right
+  padding: 1.5rem 1.5rem 0 1.5rem;       // Top and horizontal padding
+  
+  .modal-title {
+    font-size: 1.5rem;                    // Large, prominent title
+    font-weight: 600;                     // Semi-bold weight
+    color: $text-primary;
+    margin: 0;                            // Remove default margins
+    line-height: 1.2;                     // Tight line height
+  }
+}
+
+// ===== CLOSE BUTTON =====
+.close-button {
+  // Layout and sizing
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 6px;
+  background-color: transparent;
+  
+  // Flexbox for icon centering
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  // Interactive states
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  color: $text-secondary;
+  
+  // Hover effect
+  &:hover {
+    background-color: $close-hover;
+    color: $text-primary;
+  }
+  
+  // Focus state for accessibility
+  &:focus {
+    outline: 2px solid #6366f1;
+    outline-offset: 2px;
+  }
+  
+  // Active state
+  &:active {
+    background-color: #e5e7eb;
+  }
+  
+  // Icon styling
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+// ===== MODAL BODY =====
+.modal-body {
+  padding: 1.5rem;                        // Comfortable padding around content
+  
+  .modal-description {
+    font-size: 0.95rem;                   // Slightly smaller than default
+    color: $text-secondary;
+    line-height: 1.5;                     // Good reading line height
+    margin: 0 0 2rem 0;                   // Space below description
+    text-align: center;                   // Center align text
+  }
+}
+
+// ===== GOOGLE LOGIN BUTTON =====
+.google-login-button {
+  // Full width button
+  width: 100%;
+  padding: 0.75rem 1rem;                  // Comfortable padding
+  
+  // Border and background
+  border: 1px solid $google-border;
+  border-radius: 8px;
+  background-color: $modal-bg;
+  
+  // Typography
+  font-size: 1rem;
+  font-weight: 500;                       // Medium weight
+  color: $text-primary;
+  font-family: inherit;                   // Use same font as page
+  
+  // Flexbox for icon and text alignment
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;                           // Space between icon and text
+  
+  // Interactive states
+  cursor: pointer;
+  transition: all 0.2s ease;
+  
+  // Hover effect
+  &:hover {
+    background-color: $google-hover;
+    border-color: #9ca3af;
+    transform: translateY(-1px);           // Subtle lift effect
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  // Focus state for accessibility
+  &:focus {
+    outline: 2px solid #6366f1;
+    outline-offset: 2px;
+  }
+  
+  // Active state
+  &:active {
+    transform: translateY(0);              // Return to normal position
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  // Google icon styling
+  .google-icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;                        // Prevent icon from shrinking
+  }
+}
+
+// ===== ANIMATIONS =====
+@keyframes backdropFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+// ===== RESPONSIVE DESIGN =====
+@media (max-width: 480px) {
+  .modal-backdrop {
+    padding: 0.5rem;                      // Less padding on mobile
+  }
+  
+  .modal-content {
+    max-width: 100%;                      // Full width on mobile
+    margin: 0;
+  }
+  
+  .modal-header {
+    padding: 1rem 1rem 0 1rem;            // Less padding on mobile
+    
+    .modal-title {
+      font-size: 1.25rem;                 // Smaller title on mobile
+    }
+  }
+  
+  .modal-body {
+    padding: 1rem;                        // Less padding on mobile
+    
+    .modal-description {
+      font-size: 0.9rem;                  // Smaller text on mobile
+    }
+  }
+  
+  .google-login-button {
+    padding: 0.8rem 1rem;                 // Slightly more padding for easier tapping
+    font-size: 0.95rem;                   // Slightly smaller text
+  }
+}
+
+// ===== ACCESSIBILITY IMPROVEMENTS =====
+// Reduced motion for users who prefer less animation
+@media (prefers-reduced-motion: reduce) {
+  .modal-backdrop,
+  .modal-content,
+  .close-button,
+  .google-login-button {
+    animation: none;
+    transition: none;
+  }
+  
+  .google-login-button:hover {
+    transform: none;
+  }
+}
+
+// High contrast mode support
+@media (prefers-contrast: high) {
+  .modal-content {
+    border: 2px solid $text-primary;
+  }
+  
+  .google-login-button {
+    border-width: 2px;
+  }
+  
+  .close-button {
+    border: 1px solid $text-secondary;
+  }
+}
