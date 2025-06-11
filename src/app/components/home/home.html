@@ -1,0 +1,51 @@
+<!-- src/app/components/home/home.component.html -->
+<div class="home-container">
+  <!-- Header Section -->
+  <header class="hero-section">
+    <h1 class="main-title">{{ title }}</h1>
+    <p class="subtitle">Your Ultimate Dungeons & Dragons Image Database</p>
+    
+    <!-- Loading indicator for future use -->
+    @if (isLoading) {
+      <div class="loading-spinner">Loading...</div>
+    }
+  </header>
+
+  <!-- Main Content Section -->
+  <main class="main-content">
+    <div class="feature-grid">
+      <!-- Feature Card 1 -->
+      <div class="feature-card">
+        <h3>🐉 Character Art</h3>
+        <p>Discover amazing character artwork for your campaigns</p>
+      </div>
+
+      <!-- Feature Card 2 -->
+      <div class="feature-card">
+        <h3>🗺️ Maps & Locations</h3>
+        <p>Find the perfect battlemap for your adventures</p>
+      </div>
+
+      <!-- Feature Card 3 -->
+      <div class="feature-card">
+        <h3>⚔️ Items & Weapons</h3>
+        <p>Browse magical items and legendary weapons</p>
+      </div>
+
+      <!-- Feature Card 4 -->
+      <div class="feature-card">
+        <h3>👥 Collections</h3>
+        <p>Create and share your own image collections</p>
+      </div>
+    </div>
+
+    <!-- Call to Action -->
+    <section class="cta-section">
+      <h2>Ready to Start Your Adventure?</h2>
+      <p>Sign in with Google to start creating your collections</p>
+      <button class="cta-button" type="button">
+        🔥 Get Started
+      </button>
+    </section>
+  </main>
+</div>
