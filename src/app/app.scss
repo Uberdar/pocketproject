@@ -1,0 +1,105 @@
+// ===== GLOBAL APP STYLES =====
+
+// Variables for consistency
+$nav-height: 70px;           // Same as navigation component
+$content-padding: 2rem;      // Standard content padding
+
+// ===== MAIN CONTENT AREA =====
+.main-content {
+  // Account for fixed navigation at top
+  margin-top: $nav-height;     // Push content below fixed nav
+  min-height: calc(100vh - #{$nav-height}); // Full height minus nav
+  
+  // Layout
+  padding: $content-padding;   // Comfortable padding around content
+  
+  // Why these styles:
+  // - margin-top ensures content isn't hidden behind fixed nav
+  // - min-height makes sure content takes full viewport height
+  // - padding provides breathing room around content
+}
+
+// ===== TEMPORARY CONTENT STYLES =====
+// (Remove these when you add real pages)
+.temp-content {
+  max-width: 800px;           // Readable line length
+  margin: 0 auto;             // Center the content
+  text-align: center;         // Center align text
+  padding: 3rem 0;            // Vertical spacing
+  
+  h2 {
+    color: #1f2937;           // Dark gray for good contrast
+    font-size: 2.5rem;        // Large, prominent heading
+    font-weight: 700;         // Bold weight
+    margin-bottom: 1rem;      // Space below heading
+    
+    // Add some visual flair
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  p {
+    color: #6b7280;           // Light gray for body text
+    font-size: 1.125rem;      // Slightly larger than default
+    line-height: 1.6;         // Good reading line height
+    margin-bottom: 1rem;      // Space between paragraphs
+  }
+}
+
+// ===== RESPONSIVE ADJUSTMENTS =====
+@media (max-width: 768px) {
+  .main-content {
+    padding: 1rem;            // Less padding on mobile
+  }
+  
+  .temp-content {
+    padding: 2rem 0;          // Less vertical padding
+    
+    h2 {
+      font-size: 2rem;         // Smaller heading on mobile
+    }
+    
+    p {
+      font-size: 1rem;         // Standard size on mobile
+    }
+  }
+}
+
+// ===== GLOBAL RESET FOR CONSISTENT SPACING =====
+// This ensures your app has consistent styling
+* {
+  box-sizing: border-box;     // Include padding/border in width calculations
+}
+
+body {
+  margin: 0;                  // Remove default browser margins
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.5;           // Good default line height
+  color: #1f2937;             // Default text color
+  background-color: #ffffff;  // Clean white background
+}
+
+// ===== UTILITY CLASSES =====
+// These can be useful throughout your app
+
+.container {
+  max-width: 1200px;          // Standard container width
+  margin: 0 auto;             // Center the container
+  padding: 0 1rem;            // Horizontal padding
+}
+
+.text-center {
+  text-align: center;
+}
+
+.mb-1 { margin-bottom: 0.5rem; }
+.mb-2 { margin-bottom: 1rem; }
+.mb-3 { margin-bottom: 1.5rem; }
+.mb-4 { margin-bottom: 2rem; }
+
+.mt-1 { margin-top: 0.5rem; }
+.mt-2 { margin-top: 1rem; }
+.mt-3 { margin-top: 1.5rem; }
+.mt-4 { margin-top: 2rem; }

@@ -1,0 +1,64 @@
+<!-- Top Navigation Bar -->
+<nav class="top-navigation" role="navigation" aria-label="Main navigation">
+  <!-- Navigation Container -->
+  <div class="nav-container">
+    
+    <!-- Left Side: Logo/Title -->
+    <div class="nav-left">
+      <a href="/" class="logo-link" aria-label="Go to homepage">
+        <h1 class="app-title">{{ appTitle }}</h1>
+      </a>
+    </div>
+    
+    <!-- Center: Navigation Links (we'll add these later) -->
+    <div class="nav-center">
+      <!-- Future navigation menu items will go here -->
+      <!-- Example: Home, Browse, Categories, etc. -->
+    </div>
+    
+    <!-- Right Side: Login Button -->
+    <div class="nav-right">
+      <button 
+        type="button" 
+        class="login-button"
+        (click)="onLoginClick()"
+        aria-label="Log in to your account">
+        Log In
+      </button>
+    </div>
+    
+  </div>
+</nav>
+
+<!-- 
+EXPLANATION OF THE HTML STRUCTURE:
+
+1. <nav> element:
+   - Semantic HTML5 element for navigation
+   - role="navigation" for accessibility
+   - aria-label provides context for screen readers
+
+2. .nav-container:
+   - Wrapper div for layout control
+   - Will use CSS flexbox for positioning
+
+3. .nav-left:
+   - Contains logo/title
+   - <h1> for SEO and semantic importance
+   - {{ appTitle }} uses Angular interpolation to display the title
+
+4. .nav-center:
+   - Reserved for future navigation links
+   - Empty for now but structured for easy expansion
+
+5. .nav-right:
+   - Contains the login button
+   - (click)="onLoginClick()" uses Angular event binding
+   - aria-label for accessibility
+
+6. Why this structure?
+   - Flexible: Easy to add more elements
+   - Responsive: Can adapt to different screen sizes
+   - Accessible: Proper ARIA labels and semantic HTML
+   - Maintainable: Clear sections for different purposes
+-->

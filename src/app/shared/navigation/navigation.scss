@@ -1,0 +1,209 @@
+// ===== SCSS VARIABLES =====
+// Define colors and sizes that we can reuse throughout the component
+$primary-color: #6366f1;      // Indigo - modern and professional
+$primary-hover: #4f46e5;      // Darker indigo for hover effects
+$background-color: #ffffff;    // White background for clean look
+$text-color: #1f2937;         // Dark gray for good contrast
+$text-light: #6b7280;         // Light gray for secondary text
+$border-color: #e5e7eb;       // Light gray for borders
+$shadow-color: rgba(0, 0, 0, 0.1); // Subtle shadow
+$nav-height: 70px;            // Fixed height for navigation
+$container-padding: 1rem;      // Standard padding
+
+// ===== MAIN NAVIGATION STYLES =====
+.top-navigation {
+  // Position and layout
+  position: fixed;             // Stays at top when scrolling
+  top: 0;                     // Positioned at very top
+  left: 0;                    // Starts from left edge
+  right: 0;                   // Extends to right edge
+  z-index: 1000;              // High z-index to stay above other content
+  
+  // Visual styling
+  background-color: $background-color;
+  border-bottom: 1px solid $border-color; // Subtle bottom border
+  box-shadow: 0 2px 4px $shadow-color;    // Subtle shadow for depth
+  
+  // Height
+  height: $nav-height;
+  
+  // Why these styles?
+  // - Fixed position keeps nav visible when scrolling
+  // - High z-index ensures it stays on top
+  // - Shadow and border create visual separation
+}
+
+// ===== CONTAINER LAYOUT =====
+.nav-container {
+  // Layout setup
+  display: flex;              // Flexbox for easy alignment
+  align-items: center;        // Vertically center all items
+  justify-content: space-between; // Spread items across full width
+  
+  // Sizing and spacing
+  height: 100%;               // Full height of navigation
+  max-width: 1200px;          // Maximum width for large screens
+  margin: 0 auto;             // Center the container
+  padding: 0 $container-padding; // Horizontal padding
+  
+  // Why flexbox?
+  // - Easy to align items vertically and horizontally
+  // - Responsive by default
+  // - Simple to add/remove items
+}
+
+// ===== LEFT SECTION (Logo/Title) =====
+.nav-left {
+  display: flex;
+  align-items: center;
+  
+  .logo-link {
+    text-decoration: none;      // Remove underline from link
+    color: inherit;             // Use parent color
+    
+    // Hover effect for better UX
+    &:hover {
+      opacity: 0.8;             // Slight fade on hover
+      transition: opacity 0.2s ease; // Smooth transition
+    }
+  }
+  
+  .app-title {
+    font-size: 1.5rem;         // Large, prominent title
+    font-weight: 700;          // Bold weight
+    color: $primary-color;     // Brand color
+    margin: 0;                 // Remove default margin
+    letter-spacing: -0.025em;  // Tight letter spacing for modern look
+    
+    // Why these styles?
+    // - Large size makes it prominent
+    // - Brand color creates visual identity
+    // - Bold weight shows importance
+  }
+}
+
+// ===== CENTER SECTION (Future Navigation Links) =====
+.nav-center {
+  display: flex;
+  align-items: center;
+  gap: 2rem;                  // Space between future navigation items
+  
+  // Currently empty but ready for:
+  // - Navigation links (Home, Browse, Categories)
+  // - Search bar
+  // - Other navigation elements
+}
+
+// ===== RIGHT SECTION (Login Button) =====
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;                  // Space between future buttons
+}
+
+// ===== LOGIN BUTTON STYLES =====
+.login-button {
+  // Layout and sizing
+  padding: 0.5rem 1.25rem;    // Comfortable padding (8px 20px)
+  border: none;               // No border for clean look
+  border-radius: 6px;         // Rounded corners for modern look
+  
+  // Typography
+  font-size: 0.875rem;        // Slightly smaller than body text
+  font-weight: 500;           // Medium weight
+  font-family: inherit;       // Use same font as page
+  
+  // Colors
+  background-color: $primary-color;
+  color: white;
+  
+  // Interactive states
+  cursor: pointer;            // Show it's clickable
+  transition: all 0.2s ease;  // Smooth transitions for all properties
+  
+  // Focus state for accessibility (keyboard navigation)
+  &:focus {
+    outline: 2px solid $primary-color;
+    outline-offset: 2px;
+  }
+  
+  // Hover state for better UX
+  &:hover {
+    background-color: $primary-hover; // Darker shade
+    transform: translateY(-1px);       // Slight lift effect
+    box-shadow: 0 4px 8px $shadow-color; // Enhanced shadow
+  }
+  
+  // Active state (when being clicked)
+  &:active {
+    transform: translateY(0);   // Return to normal position
+    box-shadow: 0 2px 4px $shadow-color; // Reduced shadow
+  }
+  
+  // Why these styles?
+  // - Padding creates comfortable click target
+  // - Transitions make interactions feel smooth
+  // - Hover effects provide visual feedback
+  // - Focus styles help keyboard users
+}
+
+// ===== RESPONSIVE DESIGN =====
+// Tablet and smaller screens
+@media (max-width: 768px) {
+  .nav-container {
+    padding: 0 0.75rem;        // Reduce padding on smaller screens
+  }
+  
+  .app-title {
+    font-size: 1.25rem;        // Smaller title on mobile
+  }
+  
+  .nav-center {
+    display: none;              // Hide center navigation on mobile
+    // Later we might add a mobile menu toggle here
+  }
+  
+  .login-button {
+    padding: 0.4rem 1rem;      // Slightly smaller button
+    font-size: 0.8rem;         // Smaller text
+  }
+}
+
+// Mobile phones
+@media (max-width: 480px) {
+  .nav-container {
+    padding: 0 0.5rem;         // Even less padding
+  }
+  
+  .app-title {
+    font-size: 1.1rem;         // Smaller title for phones
+  }
+  
+  .login-button {
+    padding: 0.35rem 0.75rem;  // Compact button for mobile
+  }
+}
+
+// ===== ACCESSIBILITY IMPROVEMENTS =====
+// Reduced motion for users who prefer less animation
+@media (prefers-reduced-motion: reduce) {
+  .login-button,
+  .logo-link {
+    transition: none;           // Disable transitions
+  }
+  
+  .login-button:hover {
+    transform: none;            // Disable transform effects
+  }
+}
+
+// High contrast mode support
+@media (prefers-contrast: high) {
+  .top-navigation {
+    border-bottom-width: 2px;  // Thicker border for better contrast
+  }
+  
+  .login-button {
+    border: 2px solid currentColor; // Add border in high contrast
+  }
+}
