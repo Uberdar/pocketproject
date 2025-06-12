@@ -1,3 +1,4 @@
+<!-- src/app/shared/navigation/navigation.html -->
 <!-- Top Navigation Bar -->
 <nav class="top-navigation" role="navigation" aria-label="Main navigation">
   <!-- Navigation Container -->
@@ -17,76 +18,75 @@
         <span class="nav-icon">🏠</span>
         <span>Home</span>
       </a>
-      
-      <!-- Browse Link (for future) -->
-      <a routerLink="/browse" routerLinkActive="nav-link-active" class="nav-link">
-        <span class="nav-icon">🖼️</span>
-        <span>Browse</span>
-      </a>
-      
-      <!-- Collections Link (only show when authenticated) -->
-      @if (authService.isAuthenticated()) {
-        <a routerLink="/collections" routerLinkActive="nav-link-active" class="nav-link">
-          <span class="nav-icon">📚</span>
-          <span>Collections</span>
-        </a>
-      }
     </div>
     
     <!-- Right Side: Authentication Section -->
     <div class="nav-right">
       
-      @if (authService.isAuthenticated()) {
-        <!-- Authenticated User Section -->
-        <div class="user-section">
-          <!-- User Info -->
-          <div class="user-info">
-            @if (authService.userDisplayInfo()?.avatar) {
-              <img 
-                [src]="authService.userDisplayInfo()?.avatar" 
-                [alt]="authService.userDisplayInfo()?.name + ' avatar'"
-                class="user-avatar">
-            } @else {
-              <div class="user-avatar-placeholder">
-                {{ authService.userDisplayInfo()?.name?.charAt(0) || 'U' }}
-              </div>
-            }
-            <span class="user-name">{{ authService.userDisplayInfo()?.name }}</span>
+      <!-- LOADING STATE: Show while Firebase is checking auth -->
+      @if (!authService.isAuthReady()) {
+        <div class="auth-loading">
+          <!-- Loading skeleton that matches button size -->
+          <div class="auth-skeleton">
+            <div class="skeleton-spinner"></div>
+            <div class="skeleton-text">Checking...</div>
           </div>
+        </div>
+      } @else {
+        <!-- AUTH READY: Now show the correct UI based on auth state -->
+        
+        @if (authService.isAuthenticated()) {
+          <!-- Authenticated User Section -->
+          <div class="user-section">
+            <!-- User Info -->
+            <div class="user-info">
+              @if (authService.userDisplayInfo()?.avatar) {
+                <img 
+                  [src]="authService.userDisplayInfo()?.avatar" 
+                  [alt]="authService.userDisplayInfo()?.name + ' avatar'"
+                  class="user-avatar">
+              } @else {
+                <div class="user-avatar-placeholder">
+                  {{ authService.userDisplayInfo()?.name?.charAt(0) || 'U' }}
+                </div>
+              }
+              <span class="user-name">{{ authService.userDisplayInfo()?.name }}</span>
+            </div>
 
-          <!-- Sign Out Button -->
+            <!-- Sign Out Button -->
+            <button 
+              type="button" 
+              class="sign-out-button"
+              (click)="onSignOut()"
+              [disabled]="authService.isLoading()"
+              aria-label="Sign out of your account">
+              @if (authService.isLoading()) {
+                <span class="loading-spinner"></span>
+                <span>Signing out...</span>
+              } @else {
+                <span class="btn-icon">🚪</span>
+                <span>Sign Out</span>
+              }
+            </button>
+          </div>
+          
+        } @else {
+          <!-- Not Authenticated - Show Login Button -->
           <button 
             type="button" 
-            class="sign-out-button"
-            (click)="onSignOut()"
+            class="login-button"
+            (click)="onLoginClick()"
             [disabled]="authService.isLoading()"
-            aria-label="Sign out of your account">
+            aria-label="Log in to your account">
             @if (authService.isLoading()) {
               <span class="loading-spinner"></span>
-              <span>Signing out...</span>
+              <span>Loading...</span>
             } @else {
-              <span class="btn-icon">🚪</span>
-              <span>Sign Out</span>
+              <span class="btn-icon">🔑</span>
+              <span>Log In</span>
             }
           </button>
-        </div>
-        
-      } @else {
-        <!-- Not Authenticated - Show Login Button -->
-        <button 
-          type="button" 
-          class="login-button"
-          (click)="onLoginClick()"
-          [disabled]="authService.isLoading()"
-          aria-label="Log in to your account">
-          @if (authService.isLoading()) {
-            <span class="loading-spinner"></span>
-            <span>Loading...</span>
-          } @else {
-            <span class="btn-icon">🔑</span>
-            <span>Log In</span>
-          }
-        </button>
+        }
       }
       
     </div>

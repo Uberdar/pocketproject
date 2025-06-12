@@ -1,3 +1,5 @@
+// src/app/shared/navigation/navigation.scss
+
 // ===== EXISTING SCSS VARIABLES (keep as is) =====
 $primary-color: #6366f1;
 $primary-hover: #4f46e5;
@@ -55,19 +57,17 @@ $container-padding: 1rem;
   }
 }
 
-// ===== UPDATED CENTER SECTION (add navigation links) =====
+// ===== EXISTING CENTER SECTION =====
 .nav-center {
   display: flex;
   align-items: center;
-  gap: 1.5rem; // Space between navigation links
+  gap: 1.5rem;
   
-  // Hide on mobile (keep your existing responsive behavior)
   @media (max-width: 768px) {
     display: none;
   }
 }
 
-// NEW: Navigation link styles
 .nav-link {
   display: flex;
   align-items: center;
@@ -96,14 +96,13 @@ $container-padding: 1rem;
   font-size: 1rem;
 }
 
-// ===== UPDATED RIGHT SECTION (authentication-aware) =====
+// ===== EXISTING RIGHT SECTION =====
 .nav-right {
   display: flex;
   align-items: center;
   gap: 1rem;
 }
 
-// NEW: User section when authenticated
 .user-section {
   display: flex;
   align-items: center;
@@ -115,7 +114,6 @@ $container-padding: 1rem;
   align-items: center;
   gap: 0.5rem;
   
-  // Hide username on very small screens
   @media (max-width: 480px) {
     .user-name {
       display: none;
@@ -150,9 +148,8 @@ $container-padding: 1rem;
   font-size: 0.875rem;
 }
 
-// ===== UPDATED BUTTON STYLES =====
+// ===== EXISTING BUTTON STYLES =====
 .login-button {
-  // Keep all your existing styles
   padding: 0.5rem 1.25rem;
   border: none;
   border-radius: 6px;
@@ -163,8 +160,6 @@ $container-padding: 1rem;
   color: white;
   cursor: pointer;
   transition: all 0.2s ease;
-  
-  // Add flexbox for icon + text layout
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -185,7 +180,6 @@ $container-padding: 1rem;
     box-shadow: 0 2px 4px $shadow-color;
   }
   
-  // Disabled state for loading
   &:disabled {
     opacity: 0.7;
     cursor: not-allowed;
@@ -193,23 +187,19 @@ $container-padding: 1rem;
   }
 }
 
-// NEW: Sign out button (similar to login but red)
 .sign-out-button {
-  @extend .login-button; // Inherit all login button styles
-  
-  background-color: #dc2626; // Red background
+  @extend .login-button;
+  background-color: #dc2626;
   
   &:hover:not(:disabled) {
-    background-color: #b91c1c; // Darker red
+    background-color: #b91c1c;
   }
 }
 
-// NEW: Button icons
 .btn-icon {
   font-size: 1rem;
 }
 
-// NEW: Loading spinner
 .loading-spinner {
   width: 16px;
   height: 16px;
@@ -219,7 +209,67 @@ $container-padding: 1rem;
   animation: spin 1s linear infinite;
 }
 
-// ===== KEEP ALL YOUR EXISTING RESPONSIVE STYLES =====
+// ===== NEW: AUTH LOADING STYLES =====
+.auth-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px; // Match button height
+  min-width: 100px; // Ensure consistent space
+}
+
+.auth-skeleton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1.25rem; // Match button padding
+  background-color: rgba($primary-color, 0.1); // Subtle background
+  border-radius: 6px; // Match button border radius
+  animation: pulse 1.5s ease-in-out infinite; // Gentle pulsing
+}
+
+.skeleton-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba($primary-color, 0.3);
+  border-top: 2px solid $primary-color;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.skeleton-text {
+  font-size: 0.875rem; // Match button text size
+  color: $text-light;
+  font-weight: 500;
+  
+  // Hide text on very small screens to save space
+  @media (max-width: 480px) {
+    display: none;
+  }
+}
+
+// ===== ANIMATIONS =====
+@keyframes spin {
+  0% { 
+    transform: rotate(0deg);
+  }
+  100% { 
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(0.98);
+  }
+}
+
+// ===== EXISTING RESPONSIVE STYLES =====
 @media (max-width: 768px) {
   .nav-container {
     padding: 0 0.75rem;
@@ -239,17 +289,21 @@ $container-padding: 1rem;
     font-size: 0.8rem;
   }
   
-  // Stack user info vertically on small screens
   .user-section {
     flex-direction: column;
     gap: 0.5rem;
     
-    // Or hide user section entirely on very small screens
     @media (max-width: 480px) {
       .user-info {
         display: none;
       }
     }
+  }
+  
+  // Responsive auth loading skeleton
+  .auth-skeleton {
+    padding: 0.4rem 1rem; // Match smaller button padding
+    min-width: 80px; // Smaller minimum width on mobile
   }
 }
 
@@ -266,15 +320,27 @@ $container-padding: 1rem;
   .sign-out-button {
     padding: 0.35rem 0.75rem;
   }
+  
+  .auth-skeleton {
+    padding: 0.35rem 0.75rem;
+    min-width: 60px;
+  }
 }
 
-// ===== KEEP YOUR EXISTING ACCESSIBILITY STYLES =====
+// ===== ACCESSIBILITY =====
 @media (prefers-reduced-motion: reduce) {
   .login-button,
   .sign-out-button,
   .logo-link,
-  .nav-link {
+  .nav-link,
+  .auth-skeleton {
     transition: none;
+    animation: none;
+  }
+  
+  .loading-spinner,
+  .skeleton-spinner {
+    animation: none;
   }
   
   .login-button:hover,
@@ -292,14 +358,8 @@ $container-padding: 1rem;
   .sign-out-button {
     border: 2px solid currentColor;
   }
-}
-
-// NEW: Spinner animation
-@keyframes spin {
-  0% { 
-    transform: rotate(0deg);
-  }
-  100% { 
-    transform: rotate(360deg);
+  
+  .auth-skeleton {
+    border: 1px solid $primary-color;
   }
 }

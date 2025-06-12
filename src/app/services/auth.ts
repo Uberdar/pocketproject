@@ -33,13 +33,19 @@ export class AuthService {
 
   // Signals for reactive state management (Angular v20 feature)
   private userSignal = signal<User | null>(null); // Current Firebase user
-  private loadingSignal = signal<boolean>(false); // Loading state for UI
+  private loadingSignal = signal<boolean>(false); // Loading state for UI actions (login/logout)
   private errorSignal = signal<string | null>(null); // Error messages
+  
+  // NEW: Auth initialization tracking signal
+  private authInitializedSignal = signal<boolean>(false); // Has Firebase finished checking auth state?
 
   // Computed signals (derived state) - automatically update when dependencies change
   public readonly user = this.userSignal.asReadonly(); // Expose user as readonly
-  public readonly isLoading = this.loadingSignal.asReadonly(); // Expose loading state
+  public readonly isLoading = this.loadingSignal.asReadonly(); // Expose loading state for actions
   public readonly error = this.errorSignal.asReadonly(); // Expose error state
+  
+  // NEW: Expose auth initialization state
+  public readonly isAuthReady = this.authInitializedSignal.asReadonly(); // Has Firebase finished checking?
   
   // Computed signal to check if user is authenticated
   public readonly isAuthenticated = computed(() => !!this.userSignal()); // Returns true if user exists
@@ -65,12 +71,22 @@ export class AuthService {
   /**
    * Initialize Firebase Auth State Listener
    * Automatically updates user signal when auth state changes
+   * NEW: Now tracks when Firebase has finished its initial auth check
    */
   private initAuthStateListener(): void {
     onAuthStateChanged(this.auth, (user) => {
       console.log('Auth state changed:', user ? 'User logged in' : 'User logged out');
-      this.userSignal.set(user); // Update signal with current user
+      
+      // Update user state
+      this.userSignal.set(user); // Set current user (null if not logged in)
       this.errorSignal.set(null); // Clear any previous errors
+      
+      // NEW: Mark auth as initialized on first callback
+      // This happens once Firebase has finished checking for existing auth
+      if (!this.authInitializedSignal()) {
+        console.log('Firebase Auth initialization complete');
+        this.authInitializedSignal.set(true); // Auth check is done!
+      }
     });
   }
 
@@ -80,7 +96,7 @@ export class AuthService {
    */
   async signInWithGoogle(): Promise<void> {
     try {
-      this.loadingSignal.set(true); // Start loading
+      this.loadingSignal.set(true); // Start loading (for button states)
       this.errorSignal.set(null); // Clear previous errors
 
       // Create Google Auth Provider
