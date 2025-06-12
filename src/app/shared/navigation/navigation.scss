@@ -1,209 +1,305 @@
-// ===== SCSS VARIABLES =====
-// Define colors and sizes that we can reuse throughout the component
-$primary-color: #6366f1;      // Indigo - modern and professional
-$primary-hover: #4f46e5;      // Darker indigo for hover effects
-$background-color: #ffffff;    // White background for clean look
-$text-color: #1f2937;         // Dark gray for good contrast
-$text-light: #6b7280;         // Light gray for secondary text
-$border-color: #e5e7eb;       // Light gray for borders
-$shadow-color: rgba(0, 0, 0, 0.1); // Subtle shadow
-$nav-height: 70px;            // Fixed height for navigation
-$container-padding: 1rem;      // Standard padding
+// ===== EXISTING SCSS VARIABLES (keep as is) =====
+$primary-color: #6366f1;
+$primary-hover: #4f46e5;
+$background-color: #ffffff;
+$text-color: #1f2937;
+$text-light: #6b7280;
+$border-color: #e5e7eb;
+$shadow-color: rgba(0, 0, 0, 0.1);
+$nav-height: 70px;
+$container-padding: 1rem;
 
-// ===== MAIN NAVIGATION STYLES =====
+// ===== EXISTING STYLES (keep all your existing styles) =====
 .top-navigation {
-  // Position and layout
-  position: fixed;             // Stays at top when scrolling
-  top: 0;                     // Positioned at very top
-  left: 0;                    // Starts from left edge
-  right: 0;                   // Extends to right edge
-  z-index: 1000;              // High z-index to stay above other content
-  
-  // Visual styling
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
   background-color: $background-color;
-  border-bottom: 1px solid $border-color; // Subtle bottom border
-  box-shadow: 0 2px 4px $shadow-color;    // Subtle shadow for depth
-  
-  // Height
+  border-bottom: 1px solid $border-color;
+  box-shadow: 0 2px 4px $shadow-color;
   height: $nav-height;
-  
-  // Why these styles?
-  // - Fixed position keeps nav visible when scrolling
-  // - High z-index ensures it stays on top
-  // - Shadow and border create visual separation
 }
 
-// ===== CONTAINER LAYOUT =====
 .nav-container {
-  // Layout setup
-  display: flex;              // Flexbox for easy alignment
-  align-items: center;        // Vertically center all items
-  justify-content: space-between; // Spread items across full width
-  
-  // Sizing and spacing
-  height: 100%;               // Full height of navigation
-  max-width: 1200px;          // Maximum width for large screens
-  margin: 0 auto;             // Center the container
-  padding: 0 $container-padding; // Horizontal padding
-  
-  // Why flexbox?
-  // - Easy to align items vertically and horizontally
-  // - Responsive by default
-  // - Simple to add/remove items
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 $container-padding;
 }
 
-// ===== LEFT SECTION (Logo/Title) =====
 .nav-left {
   display: flex;
   align-items: center;
   
   .logo-link {
-    text-decoration: none;      // Remove underline from link
-    color: inherit;             // Use parent color
+    text-decoration: none;
+    color: inherit;
     
-    // Hover effect for better UX
     &:hover {
-      opacity: 0.8;             // Slight fade on hover
-      transition: opacity 0.2s ease; // Smooth transition
+      opacity: 0.8;
+      transition: opacity 0.2s ease;
     }
   }
   
   .app-title {
-    font-size: 1.5rem;         // Large, prominent title
-    font-weight: 700;          // Bold weight
-    color: $primary-color;     // Brand color
-    margin: 0;                 // Remove default margin
-    letter-spacing: -0.025em;  // Tight letter spacing for modern look
-    
-    // Why these styles?
-    // - Large size makes it prominent
-    // - Brand color creates visual identity
-    // - Bold weight shows importance
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: $primary-color;
+    margin: 0;
+    letter-spacing: -0.025em;
   }
 }
 
-// ===== CENTER SECTION (Future Navigation Links) =====
+// ===== UPDATED CENTER SECTION (add navigation links) =====
 .nav-center {
   display: flex;
   align-items: center;
-  gap: 2rem;                  // Space between future navigation items
+  gap: 1.5rem; // Space between navigation links
   
-  // Currently empty but ready for:
-  // - Navigation links (Home, Browse, Categories)
-  // - Search bar
-  // - Other navigation elements
+  // Hide on mobile (keep your existing responsive behavior)
+  @media (max-width: 768px) {
+    display: none;
+  }
 }
 
-// ===== RIGHT SECTION (Login Button) =====
+// NEW: Navigation link styles
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: $text-light;
+  font-weight: 500;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  font-size: 0.875rem;
+  
+  &:hover {
+    color: $primary-color;
+    background-color: rgba($primary-color, 0.1);
+  }
+  
+  &.nav-link-active {
+    color: $primary-color;
+    background-color: rgba($primary-color, 0.15);
+    font-weight: 600;
+  }
+}
+
+.nav-icon {
+  font-size: 1rem;
+}
+
+// ===== UPDATED RIGHT SECTION (authentication-aware) =====
 .nav-right {
   display: flex;
   align-items: center;
-  gap: 1rem;                  // Space between future buttons
+  gap: 1rem;
 }
 
-// ===== LOGIN BUTTON STYLES =====
-.login-button {
-  // Layout and sizing
-  padding: 0.5rem 1.25rem;    // Comfortable padding (8px 20px)
-  border: none;               // No border for clean look
-  border-radius: 6px;         // Rounded corners for modern look
+// NEW: User section when authenticated
+.user-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   
-  // Typography
-  font-size: 0.875rem;        // Slightly smaller than body text
-  font-weight: 500;           // Medium weight
-  font-family: inherit;       // Use same font as page
-  
-  // Colors
+  // Hide username on very small screens
+  @media (max-width: 480px) {
+    .user-name {
+      display: none;
+    }
+  }
+}
+
+.user-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid $primary-color;
+  object-fit: cover;
+}
+
+.user-avatar-placeholder {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
   background-color: $primary-color;
   color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.user-name {
+  font-weight: 500;
+  color: $text-color;
+  font-size: 0.875rem;
+}
+
+// ===== UPDATED BUTTON STYLES =====
+.login-button {
+  // Keep all your existing styles
+  padding: 0.5rem 1.25rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: $primary-color;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
   
-  // Interactive states
-  cursor: pointer;            // Show it's clickable
-  transition: all 0.2s ease;  // Smooth transitions for all properties
+  // Add flexbox for icon + text layout
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   
-  // Focus state for accessibility (keyboard navigation)
   &:focus {
     outline: 2px solid $primary-color;
     outline-offset: 2px;
   }
   
-  // Hover state for better UX
-  &:hover {
-    background-color: $primary-hover; // Darker shade
-    transform: translateY(-1px);       // Slight lift effect
-    box-shadow: 0 4px 8px $shadow-color; // Enhanced shadow
+  &:hover:not(:disabled) {
+    background-color: $primary-hover;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px $shadow-color;
   }
   
-  // Active state (when being clicked)
   &:active {
-    transform: translateY(0);   // Return to normal position
-    box-shadow: 0 2px 4px $shadow-color; // Reduced shadow
+    transform: translateY(0);
+    box-shadow: 0 2px 4px $shadow-color;
   }
   
-  // Why these styles?
-  // - Padding creates comfortable click target
-  // - Transitions make interactions feel smooth
-  // - Hover effects provide visual feedback
-  // - Focus styles help keyboard users
+  // Disabled state for loading
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+  }
 }
 
-// ===== RESPONSIVE DESIGN =====
-// Tablet and smaller screens
+// NEW: Sign out button (similar to login but red)
+.sign-out-button {
+  @extend .login-button; // Inherit all login button styles
+  
+  background-color: #dc2626; // Red background
+  
+  &:hover:not(:disabled) {
+    background-color: #b91c1c; // Darker red
+  }
+}
+
+// NEW: Button icons
+.btn-icon {
+  font-size: 1rem;
+}
+
+// NEW: Loading spinner
+.loading-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 2px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+// ===== KEEP ALL YOUR EXISTING RESPONSIVE STYLES =====
 @media (max-width: 768px) {
   .nav-container {
-    padding: 0 0.75rem;        // Reduce padding on smaller screens
+    padding: 0 0.75rem;
   }
   
   .app-title {
-    font-size: 1.25rem;        // Smaller title on mobile
+    font-size: 1.25rem;
   }
   
   .nav-center {
-    display: none;              // Hide center navigation on mobile
-    // Later we might add a mobile menu toggle here
+    display: none;
   }
   
-  .login-button {
-    padding: 0.4rem 1rem;      // Slightly smaller button
-    font-size: 0.8rem;         // Smaller text
+  .login-button,
+  .sign-out-button {
+    padding: 0.4rem 1rem;
+    font-size: 0.8rem;
+  }
+  
+  // Stack user info vertically on small screens
+  .user-section {
+    flex-direction: column;
+    gap: 0.5rem;
+    
+    // Or hide user section entirely on very small screens
+    @media (max-width: 480px) {
+      .user-info {
+        display: none;
+      }
+    }
   }
 }
 
-// Mobile phones
 @media (max-width: 480px) {
   .nav-container {
-    padding: 0 0.5rem;         // Even less padding
+    padding: 0 0.5rem;
   }
   
   .app-title {
-    font-size: 1.1rem;         // Smaller title for phones
+    font-size: 1.1rem;
   }
   
-  .login-button {
-    padding: 0.35rem 0.75rem;  // Compact button for mobile
+  .login-button,
+  .sign-out-button {
+    padding: 0.35rem 0.75rem;
   }
 }
 
-// ===== ACCESSIBILITY IMPROVEMENTS =====
-// Reduced motion for users who prefer less animation
+// ===== KEEP YOUR EXISTING ACCESSIBILITY STYLES =====
 @media (prefers-reduced-motion: reduce) {
   .login-button,
-  .logo-link {
-    transition: none;           // Disable transitions
+  .sign-out-button,
+  .logo-link,
+  .nav-link {
+    transition: none;
   }
   
-  .login-button:hover {
-    transform: none;            // Disable transform effects
+  .login-button:hover,
+  .sign-out-button:hover {
+    transform: none;
   }
 }
 
-// High contrast mode support
 @media (prefers-contrast: high) {
   .top-navigation {
-    border-bottom-width: 2px;  // Thicker border for better contrast
+    border-bottom-width: 2px;
   }
   
-  .login-button {
-    border: 2px solid currentColor; // Add border in high contrast
+  .login-button,
+  .sign-out-button {
+    border: 2px solid currentColor;
+  }
+}
+
+// NEW: Spinner animation
+@keyframes spin {
+  0% { 
+    transform: rotate(0deg);
+  }
+  100% { 
+    transform: rotate(360deg);
   }
 }

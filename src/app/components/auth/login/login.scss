@@ -1,0 +1,233 @@
+// src/app/components/auth/login/login.component.scss
+
+// Main container for login page
+.login-container {
+  min-height: 100vh; // Full viewport height
+  display: flex; // Flexbox layout
+  align-items: center; // Center vertically
+  justify-content: center; // Center horizontally
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); // Beautiful gradient
+  padding: 2rem; // Consistent padding
+  
+  // Responsive design for mobile
+  @media (max-width: 768px) {
+    padding: 1rem; // Less padding on mobile
+  }
+}
+
+// Login card container
+.login-card {
+  background: rgba(255, 255, 255, 0.95); // Semi-transparent white
+  backdrop-filter: blur(10px); // Glass morphism effect
+  border-radius: 20px; // Rounded corners
+  padding: 3rem; // Internal padding
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1); // Soft shadow
+  border: 1px solid rgba(255, 255, 255, 0.2); // Subtle border
+  max-width: 400px; // Maximum width
+  width: 100%; // Full width up to max
+  text-align: center; // Center-aligned content
+  
+  // Mobile responsiveness
+  @media (max-width: 768px) {
+    padding: 2rem; // Less padding on mobile
+    margin: 1rem; // Margin for mobile
+  }
+}
+
+// Header section styling
+.login-header {
+  margin-bottom: 2rem; // Space below header
+}
+
+// Login title
+.login-title {
+  font-size: 2rem; // Large title
+  font-weight: 700; // Bold font
+  color: #333; // Dark text
+  margin-bottom: 0.5rem; // Space below title
+  background: linear-gradient(45deg, #667eea, #764ba2); // Gradient text
+  -webkit-background-clip: text; // Clip background to text
+  -webkit-text-fill-color: transparent; // Make text transparent to show gradient
+  background-clip: text; // Standard property
+}
+
+// Login subtitle
+.login-subtitle {
+  font-size: 1rem; // Medium text
+  color: #666; // Gray text
+  line-height: 1.5; // Better line spacing
+}
+
+// Error alert styling
+.error-alert {
+  background: #fee; // Light red background
+  border: 1px solid #fcc; // Red border
+  border-radius: 8px; // Rounded corners
+  padding: 1rem; // Internal padding
+  margin-bottom: 1.5rem; // Space below alert
+  animation: slideDown 0.3s ease-out; // Slide down animation
+}
+
+// Error content layout
+.error-content {
+  display: flex; // Flexbox layout
+  align-items: center; // Center vertically
+  gap: 0.5rem; // Space between elements
+}
+
+// Error icon
+.error-icon {
+  font-size: 1.2rem; // Icon size
+  flex-shrink: 0; // Don't shrink icon
+}
+
+// Error message text
+.error-message {
+  flex: 1; // Take remaining space
+  text-align: left; // Left-aligned text
+  color: #c33; // Red text color
+  font-weight: 500; // Semi-bold
+}
+
+// Error close button
+.error-close {
+  background: none; // No background
+  border: none; // No border
+  color: #999; // Gray color
+  cursor: pointer; // Pointer cursor
+  font-size: 1.2rem; // Button size
+  padding: 0.25rem; // Small padding
+  border-radius: 4px; // Rounded corners
+  transition: background-color 0.2s ease; // Smooth transition
+  
+  // Hover effect
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.1); // Light background on hover
+  }
+}
+
+// Login form section
+.login-form {
+  margin-bottom: 2rem; // Space below form
+}
+
+// Google sign-in button
+.google-signin-btn {
+  width: 100%; // Full width
+  padding: 1rem 1.5rem; // Button padding
+  background: white; // White background
+  border: 2px solid #ddd; // Light border
+  border-radius: 12px; // Rounded corners
+  font-size: 1rem; // Text size
+  font-weight: 600; // Semi-bold text
+  cursor: pointer; // Pointer cursor
+  transition: all 0.3s ease; // Smooth animations
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); // Subtle shadow
+  display: flex; // Flexbox layout
+  align-items: center; // Center content vertically
+  justify-content: center; // Center content horizontally
+  gap: 0.75rem; // Space between icon and text
+  
+  // Hover effects
+  &:hover:not(:disabled) {
+    border-color: #4285f4; // Google blue border
+    box-shadow: 0 4px 12px rgba(66, 133, 244, 0.2); // Blue shadow
+    transform: translateY(-1px); // Slight lift
+  }
+  
+  // Disabled state
+  &:disabled {
+    opacity: 0.7; // Reduced opacity
+    cursor: not-allowed; // Not allowed cursor
+    transform: none; // No hover effects
+  }
+  
+  // Active/pressed state
+  &:active:not(:disabled) {
+    transform: translateY(0); // Reset lift
+  }
+}
+
+// Google sign-in content layout
+.google-signin-content {
+  display: flex; // Flexbox layout
+  align-items: center; // Center vertically
+  gap: 0.75rem; // Space between icon and text
+}
+
+// Loading content layout
+.loading-content {
+  display: flex; // Flexbox layout
+  align-items: center; // Center vertically
+  gap: 0.75rem; // Space between spinner and text
+}
+
+// Google icon styling
+.google-icon {
+  width: 20px; // Icon width
+  height: 20px; // Icon height
+  flex-shrink: 0; // Don't shrink icon
+}
+
+// Loading spinner animation
+.spinner {
+  width: 20px; // Spinner size
+  height: 20px; // Spinner size
+  border: 2px solid #f3f3f3; // Light border
+  border-top: 2px solid #4285f4; // Blue top border
+  border-radius: 50%; // Circle shape
+  animation: spin 1s linear infinite; // Spinning animation
+}
+
+// Additional info section
+.login-info {
+  margin-top: 1.5rem; // Space above info
+  padding: 1rem; // Internal padding
+  background: rgba(102, 126, 234, 0.1); // Light blue background
+  border-radius: 8px; // Rounded corners
+  border: 1px solid rgba(102, 126, 234, 0.2); // Blue border
+}
+
+// Info text styling
+.info-text {
+  font-size: 0.9rem; // Smaller text
+  color: #555; // Dark gray
+  line-height: 1.6; // Better line spacing
+  margin: 0; // No margin
+}
+
+// Footer section
+.login-footer {
+  margin-top: 1.5rem; // Space above footer
+  padding-top: 1rem; // Padding above content
+  border-top: 1px solid #eee; // Top border
+}
+
+// Footer text
+.footer-text {
+  font-size: 0.8rem; // Small text
+  color: #888; // Light gray
+  line-height: 1.4; // Line spacing
+  margin: 0; // No margin
+}
+
+// Animations
+@keyframes slideDown {
+  from {
+    opacity: 0; // Start transparent
+    transform: translateY(-10px); // Start above
+  }
+  to {
+    opacity: 1; // End opaque
+    transform: translateY(0); // End in position
+  }
+}
+
+@keyframes spin {
+  0% { 
+    transform: rotate(0deg); // Start rotation
+  }
+  100% { 
+    transform: rotate(360deg); // Full rotation
+  }
+}
