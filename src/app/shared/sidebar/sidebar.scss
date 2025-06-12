@@ -1,0 +1,300 @@
+// src/app/shared/sidebar/sidebar.scss
+
+// Import color functions for modern Sass
+@use 'sass:color';
+
+// ===== SIDEBAR VARIABLES =====
+$sidebar-collapsed-width: 60px;   // Width when collapsed (circle buttons)
+$sidebar-expanded-width: 250px;   // Width when expanded (full buttons)
+$sidebar-bg: #ffffff;             // Sidebar background
+$sidebar-border: #e5e7eb;         // Border color
+$sidebar-shadow: rgba(0, 0, 0, 0.1); // Shadow color
+$item-hover-bg: #f3f4f6;         // Hover background
+$item-active-bg: #6366f1;        // Active item background
+$item-active-text: #ffffff;      // Active item text color
+$transition-speed: 0.2s;         // Fast animations as requested
+
+// ===== MAIN SIDEBAR CONTAINER =====
+.sidebar {
+  position: fixed;
+  top: 70px; // Below navigation bar (nav-height from navigation.scss)
+  left: 0;
+  bottom: 0;
+  z-index: 900; // Below navigation (1000) but above content
+  
+  background-color: $sidebar-bg;
+  border-right: 1px solid $sidebar-border;
+  box-shadow: 2px 0 4px $sidebar-shadow;
+  
+  // Smooth width transition
+  transition: width $transition-speed ease;
+  
+  // States
+  &.sidebar-collapsed {
+    width: $sidebar-collapsed-width;
+  }
+  
+  &.sidebar-expanded {
+    width: $sidebar-expanded-width;
+  }
+}
+
+// ===== SIDEBAR CONTENT =====
+.sidebar-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 0; // Remove horizontal padding - let individual items handle centering
+  
+  // Same padding for both states
+  .sidebar-expanded & {
+    padding: 1rem;
+  }
+}
+
+// ===== TOGGLE BUTTON =====
+.sidebar-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 1.5rem; // More space below toggle
+  padding: 0.5rem 0.75rem; // Consistent padding with nav items
+  
+  background: none;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all $transition-speed ease;
+  
+  // Expanded state - FIXED: Consistent width with nav items
+  .sidebar-expanded & {
+    width: calc(100% - 1rem); // Same fixed width as nav items
+    margin: 0 0.5rem 1.5rem 0.5rem; // Add horizontal margins
+    height: auto; // Let content determine height
+    min-height: 40px; // Consistent minimum height
+    box-sizing: border-box; // Include padding in width calculation
+  }
+  
+  // Collapsed state - make circular like other buttons
+  .sidebar-collapsed & {
+    justify-content: center;
+    align-items: center;
+    padding: 0; // Remove padding for circular shape
+    width: 44px; // Fixed circular size
+    height: 44px; // Fixed circular size
+    border-radius: 50%; // Perfect circle
+    margin: 0 auto 1.5rem auto; // Center horizontally and add bottom margin
+    display: flex; // Ensure flexbox for centering
+  }
+  
+  &:hover {
+    background-color: $item-hover-bg;
+  }
+  
+  &:focus {
+    outline: 2px solid $item-active-bg;
+    outline-offset: 2px;
+  }
+}
+
+.toggle-icon {
+  font-size: 1.2rem;
+  transition: transform $transition-speed ease;
+  
+  // Slight rotation animation on hover
+  .sidebar-toggle:hover & {
+    transform: scale(1.1);
+  }
+}
+
+.toggle-text {
+  margin-left: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #6b7280;
+  white-space: nowrap; // Prevent text wrapping
+}
+
+// ===== NAVIGATION SECTION =====
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0; // Remove gap since we're using margins on individual items
+  padding: 0; // No padding - let items handle their own positioning
+}
+
+// ===== SIDEBAR ITEMS (Navigation Links) =====
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0.5rem 0.75rem; // Reduced padding to match toggle button height
+  margin-bottom: 0.75rem; // Add space between buttons
+  
+  text-decoration: none;
+  color: #4b5563; // Default text color
+  border-radius: 8px;
+  transition: all $transition-speed ease;
+  
+  // Expanded state - FIXED: Consistent width for all buttons
+  .sidebar-expanded & {
+    width: calc(100% - 1rem); // Fixed width, not max-width
+    margin: 0 0.5rem 0.75rem 0.5rem; // Add horizontal margins
+    height: auto; // Let content determine height
+    min-height: 40px; // Consistent minimum height with toggle
+    box-sizing: border-box; // Include padding in width calculation
+  }
+  
+  // Collapsed state - make circular buttons, perfectly centered like toggle
+  .sidebar-collapsed & {
+    justify-content: center;
+    align-items: center;
+    padding: 0; // Remove padding for circular shape
+    width: 44px; // Fixed circular size (same as toggle)
+    height: 44px; // Fixed circular size (same as toggle)
+    border-radius: 50%; // Perfect circle
+    margin: 0 auto 0.75rem auto; // Center horizontally and add bottom margin
+    display: flex; // Ensure flexbox for centering
+  }
+  
+  // Hover effects
+  &:hover {
+    background-color: $item-hover-bg;
+    color: #1f2937; // Darker text on hover
+    transform: translateX(2px); // Slight slide effect
+    
+    // No slide effect when collapsed (circular)
+    .sidebar-collapsed & {
+      transform: scale(1.1); // Scale instead of slide for circles
+    }
+  }
+  
+  // Active state (current page) - FIXED: Using modern Sass color function
+  &.sidebar-item-active {
+    background-color: $item-active-bg;
+    color: $item-active-text;
+    
+    // IMPORTANT: Keep same width even when active
+    .sidebar-expanded & {
+      width: calc(100% - 1rem); // Same width as non-active buttons
+      margin: 0 0.5rem 0.75rem 0.5rem; // Same margins
+    }
+    
+    &:hover {
+      background-color: color.adjust($item-active-bg, $lightness: -10%);
+    }
+  }
+  
+  // Focus state for accessibility
+  &:focus {
+    outline: 2px solid $item-active-bg;
+    outline-offset: 2px;
+  }
+}
+
+// ===== SIDEBAR ITEM CONTENT =====
+.sidebar-icon {
+  font-size: 1.4rem;
+  flex-shrink: 0; // Don't shrink the icon
+  transition: transform $transition-speed ease;
+  
+  // Smaller icon in collapsed/circular mode
+  .sidebar-collapsed & {
+    font-size: 1.2rem;
+  }
+  
+  // Icon animation on hover
+  .sidebar-item:hover & {
+    transform: scale(1.1);
+  }
+}
+
+.sidebar-text {
+  margin-left: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  white-space: nowrap; // Prevent text wrapping
+  
+  // Text fade-in animation when expanding
+  opacity: 1;
+  transition: opacity $transition-speed ease;
+  
+  // Hide text immediately when collapsing
+  .sidebar-collapsed & {
+    opacity: 0;
+    pointer-events: none; // Prevent interactions when hidden
+  }
+}
+
+// ===== RESPONSIVE DESIGN =====
+@media (max-width: 768px) {
+  .sidebar {
+    // On mobile, always keep collapsed or hide completely
+    &.sidebar-expanded {
+      width: $sidebar-collapsed-width; // Force collapsed on mobile
+    }
+  }
+  
+  // Smaller icons and padding on mobile
+  .sidebar-icon {
+    font-size: 1.2rem;
+  }
+  
+  .sidebar-toggle,
+  .sidebar-item {
+    padding: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar {
+    // On very small screens, consider hiding sidebar completely
+    // Or make it even thinner
+    &.sidebar-collapsed {
+      width: 50px;
+    }
+  }
+  
+  .sidebar-icon {
+    font-size: 1rem;
+  }
+}
+
+// ===== ACCESSIBILITY =====
+@media (prefers-reduced-motion: reduce) {
+  .sidebar,
+  .sidebar-toggle,
+  .sidebar-item,
+  .toggle-icon,
+  .sidebar-icon,
+  .sidebar-text {
+    transition: none; // Remove all animations
+  }
+  
+  .sidebar-item:hover {
+    transform: none; // Remove hover transforms
+  }
+  
+  .sidebar-toggle:hover .toggle-icon,
+  .sidebar-item:hover .sidebar-icon {
+    transform: none; // Remove icon scale effects
+  }
+}
+
+@media (prefers-contrast: high) {
+  .sidebar {
+    border-right-width: 2px; // Stronger border
+  }
+  
+  .sidebar-item {
+    border: 1px solid transparent; // Add border for better contrast
+    
+    &:hover {
+      border-color: $item-hover-bg;
+    }
+    
+    &.sidebar-item-active {
+      border-color: $item-active-bg;
+    }
+  }
+}

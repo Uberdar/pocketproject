@@ -1,14 +1,16 @@
+// src/app/app.ts
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-// Import our new navigation component
 import { NavigationComponent } from './shared/navigation/navigation';
+import { SidebarComponent } from './shared/sidebar/sidebar';
 
 @Component({
   selector: 'app-root',
   imports: [
     RouterOutlet,
-    NavigationComponent // Add the navigation component to imports
-],
+    NavigationComponent, // Top navigation
+    SidebarComponent     // Left sidebar
+  ],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
@@ -18,17 +20,16 @@ export class App {
 
 // EXPLANATION OF CHANGES:
 // 
-// 1. Import Statement:
-//    - We import our NavigationComponent from the correct path
-//    - This tells Angular that we want to use this component
+// 1. Import SidebarComponent:
+//    - We import our new SidebarComponent
+//    - Add it to the imports array
 //
-// 2. Imports Array:
-//    - In Angular v20 standalone components, we list all components we use
-//    - NavigationComponent is added so we can use <app-navigation> in HTML
-//    - RouterOutlet stays for routing functionality
+// 2. ViewChild Reference:
+//    - Get reference to sidebar component
+//    - This allows us to check sidebar state in template
+//    - Used for conditional CSS classes on main content
 //
-// 3. Why This Approach:
-//    - Standalone components are more modern than NgModules
-//    - Each component declares exactly what it needs
-//    - Better tree-shaking (smaller bundle size)
-//    - Easier to understand dependencies
+// 3. Template Updates:
+//    - <app-sidebar> added to template
+//    - Main content gets conditional classes based on sidebar state
+//    - This allows content to adjust when sidebar expands/collapses

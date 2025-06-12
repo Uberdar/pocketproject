@@ -1,0 +1,70 @@
+<!-- src/app/shared/sidebar/sidebar.html -->
+<aside 
+  class="sidebar" 
+  [class.sidebar-collapsed]="isCollapsed()"
+  [class.sidebar-expanded]="!isCollapsed()">
+  
+  <!-- Sidebar Content -->
+  <div class="sidebar-content">
+    
+    <!-- Toggle Button (always at top) -->
+    <button 
+      type="button"
+      class="sidebar-toggle"
+      (click)="toggleSidebar()"
+      [title]="isCollapsed() ? 'Expand sidebar' : 'Collapse sidebar'"
+      aria-label="Toggle sidebar">
+      
+      @if (isCollapsed()) {
+        <!-- Collapsed state - show expand icon -->
+        <span class="toggle-icon">▶️</span>
+      } @else {
+        <!-- Expanded state - show collapse icon and text -->
+        <span class="toggle-icon">◀️</span>
+        <span class="toggle-text">Collapse</span>
+      }
+    </button>
+    
+    <!-- Navigation Items -->
+    <nav class="sidebar-nav" role="navigation" aria-label="Sidebar navigation">
+      
+      <!-- Home Button (always visible) -->
+      <a 
+        routerLink="/home" 
+        routerLinkActive="sidebar-item-active"
+        class="sidebar-item"
+        (click)="onSidebarItemClick('home')"
+        [title]="isCollapsed() ? 'Home' : ''"
+        aria-label="Go to home page">
+        
+        <span class="sidebar-icon">🏠</span>
+        @if (!isCollapsed()) {
+          <span class="sidebar-text">Home</span>
+        }
+      </a>
+      
+      <!-- Collections Button (only when authenticated) -->
+      @if (authService.isAuthReady() && authService.isAuthenticated()) {
+        <a 
+          routerLink="/collections" 
+          routerLinkActive="sidebar-item-active"
+          class="sidebar-item"
+          (click)="onSidebarItemClick('collections')"
+          [title]="isCollapsed() ? 'Collections' : ''"
+          aria-label="Go to collections page">
+          
+          <span class="sidebar-icon">📚</span>
+          @if (!isCollapsed()) {
+            <span class="sidebar-text">Collections</span>
+          }
+        </a>
+      }
+      
+    </nav>
+    
+    <!-- Future: Additional sections can go here -->
+    <!-- User settings, help, etc. -->
+    
+  </div>
+  
+</aside>

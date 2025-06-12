@@ -1,7 +1,11 @@
+<!-- src/app/app.html -->
 <!-- Add the navigation component at the top -->
 <app-navigation></app-navigation>
 
-<!-- Main content area with padding for fixed navigation -->
+<!-- Add the sidebar component -->
+<app-sidebar #sidebar></app-sidebar>
+
+<!-- Main content area with padding for both navigation and sidebar -->
 <main class="main-content">
   <!-- Router outlet for page content -->
   <router-outlet></router-outlet>
@@ -10,6 +14,7 @@
   <div class="temp-content">
     <h2>Welcome to DNDDB</h2>
     <p>Your D&D Database is ready! The navigation bar above contains your login button.</p>
-    <p>This content will be replaced with your actual pages when routing is set up.</p>
+    <p>Use the sidebar on the left to navigate between pages.</p>
+    <p>The sidebar can be collapsed or expanded using the toggle button.</p>
   </div>
 </main>

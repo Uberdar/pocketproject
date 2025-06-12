@@ -1,22 +1,35 @@
+// src/app/app.scss
+
 // ===== GLOBAL APP STYLES =====
 
-// Variables for consistency
-$nav-height: 70px;           // Same as navigation component
-$content-padding: 2rem;      // Standard content padding
+// Variables for consistency (matching sidebar and navigation)
+$nav-height: 70px;                    // Same as navigation component
+$sidebar-collapsed-width: 60px;       // Same as sidebar component
+$sidebar-expanded-width: 250px;       // Same as sidebar component
+$content-padding: 2rem;               // Standard content padding
+$transition-speed: 0.2s;              // Fast transitions as requested
 
-// ===== MAIN CONTENT AREA =====
+// ===== MAIN CONTENT AREA (Updated for sidebar) =====
 .main-content {
   // Account for fixed navigation at top
   margin-top: $nav-height;     // Push content below fixed nav
   min-height: calc(100vh - #{$nav-height}); // Full height minus nav
   
-  // Layout
+  // Account for sidebar - start with collapsed width
+  margin-left: $sidebar-collapsed-width;  // Default to collapsed sidebar space
+  
+  // Layout and spacing
   padding: $content-padding;   // Comfortable padding around content
+  
+  // Smooth transition when sidebar state changes
+  transition: margin-left $transition-speed ease;
   
   // Why these styles:
   // - margin-top ensures content isn't hidden behind fixed nav
+  // - margin-left pushes content to the right of sidebar (as requested)
   // - min-height makes sure content takes full viewport height
   // - padding provides breathing room around content
+  // - transition smoothly animates when sidebar toggles
 }
 
 // ===== TEMPORARY CONTENT STYLES =====
@@ -52,6 +65,12 @@ $content-padding: 2rem;      // Standard content padding
 @media (max-width: 768px) {
   .main-content {
     padding: 1rem;            // Less padding on mobile
+    
+    // On mobile, sidebar is always collapsed, so adjust accordingly
+    &.content-sidebar-collapsed,
+    &.content-sidebar-expanded {
+      margin-left: $sidebar-collapsed-width; // Always collapsed margin on mobile
+    }
   }
   
   .temp-content {
@@ -67,39 +86,38 @@ $content-padding: 2rem;      // Standard content padding
   }
 }
 
-// ===== GLOBAL RESET FOR CONSISTENT SPACING =====
-// This ensures your app has consistent styling
-* {
-  box-sizing: border-box;     // Include padding/border in width calculations
+@media (max-width: 480px) {
+  .main-content {
+    padding: 0.75rem;         // Even less padding on very small screens
+    
+    // Adjust for smaller sidebar on very small screens
+    &.content-sidebar-collapsed,
+    &.content-sidebar-expanded {
+      margin-left: 50px;       // Smaller sidebar width on tiny screens
+    }
+  }
+  
+  .temp-content {
+    padding: 1.5rem 0;        // Minimal vertical padding
+    
+    h2 {
+      font-size: 1.75rem;      // Even smaller heading
+    }
+  }
 }
 
-body {
-  margin: 0;                  // Remove default browser margins
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  line-height: 1.5;           // Good default line height
-  color: #1f2937;             // Default text color
-  background-color: #ffffff;  // Clean white background
+// ===== ACCESSIBILITY =====
+@media (prefers-reduced-motion: reduce) {
+  .main-content {
+    transition: none;         // Remove transitions for users who prefer reduced motion
+  }
 }
 
-// ===== UTILITY CLASSES =====
-// These can be useful throughout your app
-
-.container {
-  max-width: 1200px;          // Standard container width
-  margin: 0 auto;             // Center the container
-  padding: 0 1rem;            // Horizontal padding
+// ===== PRINT STYLES =====
+@media print {
+  .main-content {
+    margin-left: 0;           // Remove sidebar margin for printing
+    margin-top: 0;            // Remove navigation margin for printing
+    padding: 0;               // Remove padding for printing
+  }
 }
-
-.text-center {
-  text-align: center;
-}
-
-.mb-1 { margin-bottom: 0.5rem; }
-.mb-2 { margin-bottom: 1rem; }
-.mb-3 { margin-bottom: 1.5rem; }
-.mb-4 { margin-bottom: 2rem; }
-
-.mt-1 { margin-top: 0.5rem; }
-.mt-2 { margin-top: 1rem; }
-.mt-3 { margin-top: 1.5rem; }
-.mt-4 { margin-top: 2rem; }
