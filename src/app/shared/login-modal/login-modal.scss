@@ -1,278 +1,262 @@
-// ===== SCSS VARIABLES =====
-$backdrop-color: rgba(0, 0, 0, 0.5);     // Semi-transparent black backdrop
-$modal-bg: #ffffff;                       // White modal background
-$modal-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-$border-radius: 12px;                     // Rounded corners
-$text-primary: #1f2937;                   // Dark gray text
-$text-secondary: #6b7280;                 // Light gray text
-$google-hover: #f3f4f6;                   // Light gray for hover
-$google-border: #d1d5db;                  // Gray border for Google button
-$close-hover: #f9fafb;                    // Light gray for close button hover
+// src/shared/login-modal/login-modal.scss
 
-// ===== MODAL BACKDROP =====
+// Modal backdrop (full screen overlay)
 .modal-backdrop {
-  // Full screen overlay
-  position: fixed;
+  position: fixed; // Cover entire viewport
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 9999;                          // Very high z-index to appear above everything
-  
-  // Visual styling
-  background-color: $backdrop-color;
-  backdrop-filter: blur(4px);             // Modern blur effect behind modal
-  
-  // Flexbox to center the modal
-  display: flex;
-  align-items: center;                    // Vertical centering
-  justify-content: center;                // Horizontal centering
-  padding: 1rem;                          // Padding around modal for mobile
-  
-  // Smooth appearance animation
-  animation: backdropFadeIn 0.2s ease-out;
-  
-  // Why these styles:
-  // - Fixed position covers entire viewport
-  // - High z-index ensures it appears above other content
-  // - Flexbox provides easy centering
-  // - Blur effect adds modern touch
-  // - Animation makes appearance smooth
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6); // Semi-transparent dark overlay
+  display: flex; // Center the modal
+  align-items: center; // Center vertically
+  justify-content: center; // Center horizontally
+  z-index: 1000; // High z-index to appear above everything
+  backdrop-filter: blur(4px); // Blur background content
+  animation: fadeIn 0.2s ease-out; // Smooth appearance
 }
 
-// ===== MODAL CONTENT CONTAINER =====
-.modal-content {
-  // Layout and sizing
-  background-color: $modal-bg;
-  border-radius: $border-radius;
-  box-shadow: $modal-shadow;
-  width: 100%;
-  max-width: 400px;                       // Optimal width for login modal
-  max-height: 90vh;                       // Prevent modal from being too tall
-  overflow-y: auto;                       // Scroll if content is too long
+// Modal container
+.modal-container {
+  background: white;
+  border-radius: 16px; // Rounded corners
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15); // Soft shadow
+  max-width: 400px; // Maximum width
+  width: 90%; // Responsive width
+  max-height: 90vh; // Don't exceed viewport height
+  overflow-y: auto; // Scroll if content is too tall
+  animation: slideUp 0.3s ease-out; // Smooth entrance
   
-  // Positioning
-  position: relative;                     // For absolute positioning of close button
-  
-  // Animation
-  animation: modalSlideIn 0.3s ease-out;  // Smooth slide-in effect
-  
-  // Why these styles:
-  // - max-width prevents modal from being too wide
-  // - max-height prevents modal from exceeding viewport
-  // - Border radius and shadow create modern appearance
-  // - Animation makes interaction feel smooth
+  // Mobile adjustments
+  @media (max-width: 480px) {
+    width: 95%; // More width on small screens
+    margin: 1rem; // Small margin
+  }
 }
 
-// ===== MODAL HEADER =====
+// Modal header
 .modal-header {
-  // Layout
   display: flex;
   align-items: center;
-  justify-content: space-between;         // Title on left, close button on right
-  padding: 1.5rem 1.5rem 0 1.5rem;       // Top and horizontal padding
-  
-  .modal-title {
-    font-size: 1.5rem;                    // Large, prominent title
-    font-weight: 600;                     // Semi-bold weight
-    color: $text-primary;
-    margin: 0;                            // Remove default margins
-    line-height: 1.2;                     // Tight line height
-  }
+  justify-content: space-between;
+  padding: 1.5rem 1.5rem 0 1.5rem; // Top and side padding
+  border-bottom: 1px solid #f0f0f0; // Subtle separator
+  margin-bottom: 1.5rem;
 }
 
-// ===== CLOSE BUTTON =====
+.modal-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #333;
+  margin: 0;
+  background: linear-gradient(45deg, #667eea, #764ba2); // Gradient text
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
 .close-button {
-  // Layout and sizing
-  width: 40px;
-  height: 40px;
+  background: none;
   border: none;
-  border-radius: 6px;
-  background-color: transparent;
-  
-  // Flexbox for icon centering
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  
-  // Interactive states
+  font-size: 1.5rem;
+  color: #999;
   cursor: pointer;
-  transition: background-color 0.2s ease;
-  color: $text-secondary;
-  
-  // Hover effect
-  &:hover {
-    background-color: $close-hover;
-    color: $text-primary;
-  }
-  
-  // Focus state for accessibility
-  &:focus {
-    outline: 2px solid #6366f1;
-    outline-offset: 2px;
-  }
-  
-  // Active state
-  &:active {
-    background-color: #e5e7eb;
-  }
-  
-  // Icon styling
-  svg {
-    width: 20px;
-    height: 20px;
-  }
-}
-
-// ===== MODAL BODY =====
-.modal-body {
-  padding: 1.5rem;                        // Comfortable padding around content
-  
-  .modal-description {
-    font-size: 0.95rem;                   // Slightly smaller than default
-    color: $text-secondary;
-    line-height: 1.5;                     // Good reading line height
-    margin: 0 0 2rem 0;                   // Space below description
-    text-align: center;                   // Center align text
-  }
-}
-
-// ===== GOOGLE LOGIN BUTTON =====
-.google-login-button {
-  // Full width button
-  width: 100%;
-  padding: 0.75rem 1rem;                  // Comfortable padding
-  
-  // Border and background
-  border: 1px solid $google-border;
-  border-radius: 8px;
-  background-color: $modal-bg;
-  
-  // Typography
-  font-size: 1rem;
-  font-weight: 500;                       // Medium weight
-  color: $text-primary;
-  font-family: inherit;                   // Use same font as page
-  
-  // Flexbox for icon and text alignment
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;                           // Space between icon and text
-  
-  // Interactive states
-  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 4px;
   transition: all 0.2s ease;
   
-  // Hover effect
   &:hover {
-    background-color: $google-hover;
-    border-color: #9ca3af;
-    transform: translateY(-1px);           // Subtle lift effect
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  // Focus state for accessibility
-  &:focus {
-    outline: 2px solid #6366f1;
-    outline-offset: 2px;
-  }
-  
-  // Active state
-  &:active {
-    transform: translateY(0);              // Return to normal position
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  // Google icon styling
-  .google-icon {
-    width: 20px;
-    height: 20px;
-    flex-shrink: 0;                        // Prevent icon from shrinking
+    background: #f0f0f0;
+    color: #666;
   }
 }
 
-// ===== ANIMATIONS =====
-@keyframes backdropFadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
+// Modal content area
+.modal-content {
+  padding: 0 1.5rem 1.5rem 1.5rem;
+}
+
+// Welcome section
+.welcome-section {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.welcome-text {
+  font-size: 1rem;
+  color: #666;
+  margin: 0;
+  line-height: 1.5;
+}
+
+// Error alert (same as before)
+.error-alert {
+  background: #fee;
+  border: 1px solid #fcc;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  animation: slideDown 0.3s ease-out;
+}
+
+.error-content {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.error-icon {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.error-message {
+  flex: 1;
+  text-align: left;
+  color: #c33;
+  font-weight: 500;
+}
+
+.error-close {
+  background: none;
+  border: none;
+  color: #999;
+  cursor: pointer;
+  font-size: 1.2rem;
+  padding: 0.25rem;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+  
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.1);
   }
 }
 
-@keyframes modalSlideIn {
-  from {
-    opacity: 0;
-    transform: translateY(-20px) scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-// ===== RESPONSIVE DESIGN =====
-@media (max-width: 480px) {
-  .modal-backdrop {
-    padding: 0.5rem;                      // Less padding on mobile
+// Google sign-in button
+.google-signin-btn {
+  width: 100%;
+  padding: 1rem 1.5rem;
+  background: white;
+  border: 2px solid #ddd;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  
+  &:hover:not(:disabled) {
+    border-color: #4285f4;
+    box-shadow: 0 4px 12px rgba(66, 133, 244, 0.2);
+    transform: translateY(-1px);
   }
   
-  .modal-content {
-    max-width: 100%;                      // Full width on mobile
-    margin: 0;
-  }
-  
-  .modal-header {
-    padding: 1rem 1rem 0 1rem;            // Less padding on mobile
-    
-    .modal-title {
-      font-size: 1.25rem;                 // Smaller title on mobile
-    }
-  }
-  
-  .modal-body {
-    padding: 1rem;                        // Less padding on mobile
-    
-    .modal-description {
-      font-size: 0.9rem;                  // Smaller text on mobile
-    }
-  }
-  
-  .google-login-button {
-    padding: 0.8rem 1rem;                 // Slightly more padding for easier tapping
-    font-size: 0.95rem;                   // Slightly smaller text
-  }
-}
-
-// ===== ACCESSIBILITY IMPROVEMENTS =====
-// Reduced motion for users who prefer less animation
-@media (prefers-reduced-motion: reduce) {
-  .modal-backdrop,
-  .modal-content,
-  .close-button,
-  .google-login-button {
-    animation: none;
-    transition: none;
-  }
-  
-  .google-login-button:hover {
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
     transform: none;
   }
 }
 
-// High contrast mode support
-@media (prefers-contrast: high) {
-  .modal-content {
-    border: 2px solid $text-primary;
+.google-signin-content {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.loading-content {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.google-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.loading-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid #4285f4;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+// Info section
+.info-section {
+  text-align: center;
+  padding: 1rem;
+  background: rgba(102, 126, 234, 0.1);
+  border-radius: 8px;
+  border: 1px solid rgba(102, 126, 234, 0.2);
+}
+
+.info-text {
+  font-size: 0.9rem;
+  color: #555;
+  line-height: 1.6;
+  margin: 0;
+}
+
+// Modal footer
+.modal-footer {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid #f0f0f0;
+  text-align: center;
+}
+
+.footer-text {
+  font-size: 0.8rem;
+  color: #888;
+  line-height: 1.4;
+  margin: 0;
+}
+
+// Animations
+@keyframes fadeIn {
+  from {
+    opacity: 0;
   }
-  
-  .google-login-button {
-    border-width: 2px;
+  to {
+    opacity: 1;
   }
-  
-  .close-button {
-    border: 1px solid $text-secondary;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes spin {
+  0% { 
+    transform: rotate(0deg);
+  }
+  100% { 
+    transform: rotate(360deg);
   }
 }
